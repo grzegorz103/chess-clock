@@ -1,4 +1,4 @@
-package main.models;
+package app.models;
 
 public class Player {
 

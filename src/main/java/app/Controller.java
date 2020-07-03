@@ -1,6 +1,7 @@
-package main;
+package app;
 
-
+import app.models.Player;
+import app.models.Timer;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
@@ -8,8 +9,6 @@ import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import main.models.Player;
-import main.models.Timer;
 
 import java.util.Arrays;
 import java.util.List;

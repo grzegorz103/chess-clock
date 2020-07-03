@@ -1,9 +1,9 @@
-package main.models;
+package app.models;
 
+import app.Main;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import main.Main;
 
 public class Timer implements Runnable {
 

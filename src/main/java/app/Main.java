@@ -1,4 +1,4 @@
-package main;
+package app;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +15,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("view.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view.fxml"));
         primaryStage.setTitle("Chess timer");
         primaryStage.setScene(new Scene(root, 700, 405));
         primaryStage.show();
@@ -27,7 +27,7 @@ public class Main extends Application {
 
     public static void reset() {
         Main.stage.close();
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/main/view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view.fxml"));
         Parent root = null;
         try {
             root = (Parent) fxmlLoader.load();
