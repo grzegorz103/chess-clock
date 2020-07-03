@@ -1,4 +1,4 @@
-package sample;
+package main;
 
 
 import javafx.fxml.FXML;
@@ -8,8 +8,8 @@ import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import sample.models.Player;
-import sample.models.Timer;
+import main.models.Player;
+import main.models.Timer;
 
 import java.util.Arrays;
 import java.util.List;

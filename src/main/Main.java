@@ -1,4 +1,4 @@
-package sample;
+package main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +27,7 @@ public class Main extends Application {
 
     public static void reset() {
         Main.stage.close();
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/sample/view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/main/view.fxml"));
         Parent root = null;
         try {
             root = (Parent) fxmlLoader.load();
