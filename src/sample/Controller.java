@@ -1,17 +1,16 @@
 package sample;
 
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import sample.models.Player;
 import sample.models.Timer;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Controller {
 
@@ -25,13 +24,19 @@ public class Controller {
     @FXML
     private Label time2;
 
+    @FXML
+    private Pane leftPane;
+
+    @FXML
+    private Pane rightPane;
+
     public Controller() {
         openDialog();
     }
 
     private void setTimer() {
         int timeChoosen = Integer.parseInt(selected.split(" ")[0]) * 60;
-        this.timer = new Timer(new Player(timeChoosen), new Player(timeChoosen), time1, time2);
+        this.timer = new Timer(new Player(timeChoosen, "white", true), new Player(timeChoosen, "black", false), time1, time2);
     }
 
     private void openDialog() {
@@ -46,16 +51,34 @@ public class Controller {
 
     public void initialize() {
         setTimer();
-        time1.setText(timer.getWhitePlayer().getFormattedTime());
-        time2.setText(timer.getBlackPlayer().getFormattedTime());
+        time1.setText(timer.getLeftPlayer().getFormattedTime());
+        time2.setText(timer.getRightPlayer().getFormattedTime());
+
+        updateStyles();
+
         time1.setFocusTraversable(true);
         time1.requestFocus();
         time1.setOnKeyPressed(event -> this.timer.switchPlayers());
         startTimer();
     }
 
+    private void updateStyles() {
+        leftPane.setStyle("-fx-background-color: " + timer.getLeftPlayer().getBackgroundColor());
+        rightPane.setStyle("-fx-background-color: " + timer.getRightPlayer().getBackgroundColor());
+        time1.setStyle("-fx-text-fill: " + (timer.getLeftPlayer().getBackgroundColor().equals("white") ? "black" : "white"));
+        time2.setStyle("-fx-text-fill: " + (timer.getRightPlayer().getBackgroundColor().equals("white") ? "black" : "white"));
+        time1.setStyle("-fx-font-size: 88");
+        time2.setStyle("-fx-font-size: 88");
+    }
+
     private void startTimer() {
         Thread th = new Thread(this.timer);
         th.start();
     }
+
+    public void switchSides() {
+        this.timer.switchSides();
+        updateStyles();
+    }
+
 }

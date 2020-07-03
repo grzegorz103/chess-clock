@@ -6,11 +6,9 @@ import javafx.scene.control.Label;
 
 public class Timer implements Runnable {
 
-    private Player whitePlayer;
+    private Player leftPlayer;
 
-    private Player blackPlayer;
-
-    private Player currentPlayer;
+    private Player rightPlayer;
 
     @FXML
     Label time1;
@@ -18,39 +16,43 @@ public class Timer implements Runnable {
     @FXML
     Label time2;
 
-    public Timer(Player whitePlayer, Player blackPlayer, Label time1, Label time2) {
-        this.whitePlayer = whitePlayer;
-        this.blackPlayer = blackPlayer;
-        this.currentPlayer = whitePlayer;
+    public Timer(Player leftPlayer, Player rightPlayer, Label time1, Label time2) {
+        this.leftPlayer = leftPlayer;
+        this.rightPlayer = rightPlayer;
         this.time1 = time1;
         this.time2 = time2;
     }
 
-    public Player getWhitePlayer() {
-        return whitePlayer;
+    public Player getLeftPlayer() {
+        return leftPlayer;
     }
 
-    public void setWhitePlayer(Player whitePlayer) {
-        this.whitePlayer = whitePlayer;
+    public void setLeftPlayer(Player leftPlayer) {
+        this.leftPlayer = leftPlayer;
     }
 
-    public Player getBlackPlayer() {
-        return blackPlayer;
+    public Player getRightPlayer() {
+        return rightPlayer;
     }
 
-    public void setBlackPlayer(Player blackPlayer) {
-        this.blackPlayer = blackPlayer;
+    public void setRightPlayer(Player rightPlayer) {
+        this.rightPlayer = rightPlayer;
     }
 
     @Override
     public void run() {
         boolean stop = false;
         while (!stop) {
-            currentPlayer.setTimeLeft(currentPlayer.getTimeLeft() - 1);
+
+            if (this.leftPlayer.isCurrentPlayer()) {
+                this.leftPlayer.setTimeLeft(this.leftPlayer.getTimeLeft() - 1);
+            } else {
+                this.rightPlayer.setTimeLeft(this.rightPlayer.getTimeLeft() - 1);
+            }
 
             Platform.runLater(() -> {
-                time1.setText(whitePlayer.getFormattedTime());
-                time2.setText(blackPlayer.getFormattedTime());
+                time1.setText(leftPlayer.getFormattedTime());
+                time2.setText(rightPlayer.getFormattedTime());
             });
 
             try {
@@ -62,9 +64,18 @@ public class Timer implements Runnable {
     }
 
     public void switchPlayers() {
-        currentPlayer = currentPlayer == this.whitePlayer
-                ? this.blackPlayer
-                : this.whitePlayer;
+        if (leftPlayer.isCurrentPlayer()) {
+            leftPlayer.setCurrentPlayer(false);
+            rightPlayer.setCurrentPlayer(true);
+        } else {
+            rightPlayer.setCurrentPlayer(false);
+            leftPlayer.setCurrentPlayer(true);
+        }
     }
 
+    public void switchSides() {
+        Player temp = leftPlayer;
+        leftPlayer = rightPlayer;
+        rightPlayer = temp;
+    }
 }
