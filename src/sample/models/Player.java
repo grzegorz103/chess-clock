@@ -37,7 +37,15 @@ public class Player {
     }
 
     public String getFormattedTime() {
-        return (this.timeLeft / 60) + ":" + (this.timeLeft % 60);
+        String minutes = String.valueOf(this.timeLeft / 60);
+        if (minutes.length() < 2) {
+            minutes = "0" + minutes;
+        }
+        String seconds = String.valueOf(this.timeLeft % 60);
+        if (seconds.length() < 2) {
+            seconds = "0" + seconds;
+        }
+        return String.format("%s:%s", minutes, seconds);
     }
 
 }

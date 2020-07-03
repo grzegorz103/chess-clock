@@ -3,6 +3,7 @@ package sample.models;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import sample.Main;
 
 public class Timer implements Runnable {
 
@@ -62,7 +63,13 @@ public class Timer implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            if (this.leftPlayer.getTimeLeft() == 0 | this.rightPlayer.getTimeLeft() == 0) {
+                stop = true;
+            }
         }
+
+        Platform.runLater(Main::reset);
     }
 
     public void switchPlayers() {

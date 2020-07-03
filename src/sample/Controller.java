@@ -80,11 +80,11 @@ public class Controller {
         ds.setOffsetY(0.0f);
         ds.setRadius(50f);
         ds.setSpread(0.7);
-        ds.setColor(Color.GREEN);
-        if(timer.getLeftPlayer().isCurrentPlayer()){
+        ds.setColor(Color.YELLOW);
+        if (timer.getLeftPlayer().isCurrentPlayer()) {
             time1.setEffect(ds);
             time2.setEffect(null);
-        }else{
+        } else {
             time2.setEffect(ds);
             time1.setEffect(null);
         }
