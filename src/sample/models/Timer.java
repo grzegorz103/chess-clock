@@ -44,16 +44,18 @@ public class Timer implements Runnable {
         boolean stop = false;
         while (!stop) {
 
-            if (this.leftPlayer.isCurrentPlayer()) {
-                this.leftPlayer.setTimeLeft(this.leftPlayer.getTimeLeft() - 1);
-            } else {
-                this.rightPlayer.setTimeLeft(this.rightPlayer.getTimeLeft() - 1);
-            }
+            synchronized (this) {
+                if (this.leftPlayer.isCurrentPlayer()) {
+                    this.leftPlayer.setTimeLeft(this.leftPlayer.getTimeLeft() - 1);
+                } else {
+                    this.rightPlayer.setTimeLeft(this.rightPlayer.getTimeLeft() - 1);
+                }
 
-            Platform.runLater(() -> {
-                time1.setText(leftPlayer.getFormattedTime());
-                time2.setText(rightPlayer.getFormattedTime());
-            });
+                Platform.runLater(() -> {
+                    time1.setText(leftPlayer.getFormattedTime());
+                    time2.setText(rightPlayer.getFormattedTime());
+                });
+            }
 
             try {
                 Thread.sleep(1000);

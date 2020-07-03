@@ -4,7 +4,10 @@ package sample;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import sample.models.Player;
 import sample.models.Timer;
 
@@ -58,7 +61,10 @@ public class Controller {
 
         time1.setFocusTraversable(true);
         time1.requestFocus();
-        time1.setOnKeyPressed(event -> this.timer.switchPlayers());
+        time1.setOnKeyPressed(event -> {
+            this.timer.switchPlayers();
+            this.updateStyles();
+        });
         startTimer();
     }
 
@@ -67,8 +73,21 @@ public class Controller {
         rightPane.setStyle("-fx-background-color: " + timer.getRightPlayer().getBackgroundColor());
         time1.setStyle("-fx-text-fill: " + (timer.getLeftPlayer().getBackgroundColor().equals("white") ? "black" : "white"));
         time2.setStyle("-fx-text-fill: " + (timer.getRightPlayer().getBackgroundColor().equals("white") ? "black" : "white"));
-        time1.setStyle("-fx-font-size: 88");
-        time2.setStyle("-fx-font-size: 88");
+        time1.setStyle("-fx-font-size: 100");
+        time2.setStyle("-fx-font-size: 100");
+        DropShadow ds = new DropShadow();
+        ds.setBlurType(BlurType.GAUSSIAN);
+        ds.setOffsetY(0.0f);
+        ds.setRadius(50f);
+        ds.setSpread(0.7);
+        ds.setColor(Color.GREEN);
+        if(timer.getLeftPlayer().isCurrentPlayer()){
+            time1.setEffect(ds);
+            time2.setEffect(null);
+        }else{
+            time2.setEffect(ds);
+            time1.setEffect(null);
+        }
     }
 
     private void startTimer() {
@@ -79,6 +98,7 @@ public class Controller {
     public void switchSides() {
         this.timer.switchSides();
         updateStyles();
+        time1.requestFocus();
     }
 
 }
